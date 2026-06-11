@@ -16,14 +16,17 @@ Sebuah aplikasi *browser* game Steam yang dibangun menggunakan kerangka kerja Fl
 
 | 1️⃣ Steam List Page | 2️⃣ Game Detail Page | 3️⃣ Avatar Detail Page |
 | :---: | :---: | :---: |
-| <img src="URL_GAMBAR_HALAMAN_1_DI_SINI" width="250"> | <img src="URL_GAMBAR_HALAMAN_2_DI_SINI" width="250"> | <img src="URL_GAMBAR_HALAMAN_3_DI_SINI" width="250"> |
+| <img src="<img width="720" height="1600" alt="image" src="https://github.com/user-attachments/assets/7fd5599a-4a22-438b-acdb-d51202cceb94" />
+" width="250"> | <img src="<img width="720" height="1600" alt="image" src="https://github.com/user-attachments/assets/9bc4c673-9108-4502-8c65-b3229d119b39" />
+" width="250"> | <img src="<img width="720" height="1600" alt="image" src="https://github.com/user-attachments/assets/ead4dfd1-439a-4b8b-8712-069cc698e306" />
+" width="250"> |
 | *List dan Grid View dengan fitur Live Search* | *Halaman detail lengkap game (Developer, Tanggal, dll)* | *Fitur Zoom Gambar + Tombol Skip Navigation* |
 
 ---
 
 ## 🎯 Pencapaian Ketentuan Tugas
 
-Aplikasi ini dikembangkan dan dirancang khusus untuk memenuhi—dan melampaui—semua persyaratan tugas navigasi yang diinstruksikan oleh dosen:
+Aplikasi ini dikembangkan dan dirancang khusus untuk memenuhi-dan melampaui-semua persyaratan tugas navigasi yang diinstruksikan oleh dosen:
 
 1. **List Page (Halaman 1):** 
    - ✔️ Menampilkan lebih dari 4 item dinamis menggunakan `ListView.builder` (dan dilengkapi juga dengan `GridView`).
