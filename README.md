@@ -12,8 +12,6 @@ Sebuah aplikasi *browser* game Steam yang dibangun menggunakan kerangka kerja Fl
 
 ## 📸 Screenshots
 
-> **PENTING:** Ganti `URL_..._DI_SINI` dengan link asli atau letak path gambar *screenshot* Anda (misal: `assets/screenshots/page1.png`).
-
 | 1️⃣ Steam List Page | 2️⃣ Game Detail Page | 3️⃣ Avatar Detail Page |
 | :---: | :---: | :---: |
 | <img src="https://github.com/user-attachments/assets/7fd5599a-4a22-438b-acdb-d51202cceb94" width="250" alt="Steam List Page" /> | <img src="https://github.com/user-attachments/assets/9bc4c673-9108-4502-8c65-b3229d119b39" width="250" alt="Game Detail Page" /> | <img src="https://github.com/user-attachments/assets/ead4dfd1-439a-4b8b-8712-069cc698e306" width="250" alt="Avatar Detail Page" /> |
