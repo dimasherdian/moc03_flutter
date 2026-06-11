@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 import '../models/steam_game.dart';
 import '../constants/app_colors.dart';
@@ -19,7 +20,49 @@ class _SteamListPageState extends State<SteamListPage> {
   bool _isLoading = true;
   String _errorMessage = '';
   bool _isGridView = false;
+  String _currentSort = 'A-Z';
   final TextEditingController _searchController = TextEditingController();
+
+  DateTime? _parseDate(String? dateStr) {
+    if (dateStr == null || dateStr.isEmpty) return null;
+    try {
+      return DateFormat("d MMM, yyyy").parse(dateStr);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  void _applyFiltersAndSort() {
+    final query = _normalizeString(_searchController.text);
+    _filteredGames = _allGames.where((game) {
+      final normalizedGameName = _normalizeString(game.name);
+      return normalizedGameName.contains(query);
+    }).toList();
+
+    _filteredGames.sort((a, b) {
+      if (_currentSort == 'A-Z') {
+        return a.name.compareTo(b.name);
+      } else if (_currentSort == 'Z-A') {
+        return b.name.compareTo(a.name);
+      } else if (_currentSort == 'Release Date') {
+        final dateA = _parseDate(a.released);
+        final dateB = _parseDate(b.released);
+        if (dateA == null && dateB == null) return 0;
+        if (dateA == null) return 1;
+        if (dateB == null) return -1;
+        return dateB.compareTo(dateA); // Terbaru (newest) di atas
+      } else if (_currentSort == 'Positive Review') {
+        final int aPos = int.tryParse(a.reviewsPositive?.replaceAll(RegExp(r'[^0-9]'), '') ?? '0') ?? 0;
+        final int bPos = int.tryParse(b.reviewsPositive?.replaceAll(RegExp(r'[^0-9]'), '') ?? '0') ?? 0;
+        return bPos.compareTo(aPos);
+      } else if (_currentSort == 'Negative Review') {
+        final int aNeg = int.tryParse(a.reviewsNegative?.replaceAll(RegExp(r'[^0-9]'), '') ?? '0') ?? 0;
+        final int bNeg = int.tryParse(b.reviewsNegative?.replaceAll(RegExp(r'[^0-9]'), '') ?? '0') ?? 0;
+        return bNeg.compareTo(aNeg);
+      }
+      return 0;
+    });
+  }
 
   @override
   void initState() {
@@ -40,12 +83,8 @@ class _SteamListPageState extends State<SteamListPage> {
   }
 
   void _onSearchChanged() {
-    final query = _normalizeString(_searchController.text);
     setState(() {
-      _filteredGames = _allGames.where((game) {
-        final normalizedGameName = _normalizeString(game.name);
-        return normalizedGameName.contains(query);
-      }).toList();
+      _applyFiltersAndSort();
     });
   }
 
@@ -63,7 +102,7 @@ class _SteamListPageState extends State<SteamListPage> {
         
         setState(() {
           _allGames = games;
-          _filteredGames = games;
+          _applyFiltersAndSort();
           _isLoading = false;
         });
       } else {
@@ -120,15 +159,64 @@ class _SteamListPageState extends State<SteamListPage> {
           ],
         ),
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator(color: AppColors.steamBlue))
-          : _errorMessage.isNotEmpty
-              ? Center(child: Text(_errorMessage, style: const TextStyle(color: Colors.redAccent)))
-              : _filteredGames.isEmpty
-                  ? const Center(child: Text('No games found.', style: TextStyle(color: Colors.white70)))
-                  : _isGridView
-                      ? _buildGridView()
-                      : _buildListView(),
+      body: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            color: AppColors.steamDark,
+            child: Row(
+              children: [
+                const Text('Sort by:', style: TextStyle(color: AppColors.textSecondary)),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    decoration: BoxDecoration(
+                      color: AppColors.steamLightDark,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: _currentSort,
+                        isExpanded: true,
+                        dropdownColor: AppColors.steamLightDark,
+                        style: const TextStyle(color: AppColors.textPrimary),
+                        icon: const Icon(Icons.arrow_drop_down, color: AppColors.steamBlue),
+                        items: ['A-Z', 'Z-A', 'Release Date', 'Positive Review', 'Negative Review']
+                            .map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            setState(() {
+                              _currentSort = newValue;
+                              _applyFiltersAndSort();
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: _isLoading
+                ? const Center(child: CircularProgressIndicator(color: AppColors.steamBlue))
+                : _errorMessage.isNotEmpty
+                    ? Center(child: Text(_errorMessage, style: const TextStyle(color: Colors.redAccent)))
+                    : _filteredGames.isEmpty
+                        ? const Center(child: Text('No games found.', style: TextStyle(color: Colors.white70)))
+                        : _isGridView
+                            ? _buildGridView()
+                            : _buildListView(),
+          ),
+        ],
+      ),
     );
   }
 
