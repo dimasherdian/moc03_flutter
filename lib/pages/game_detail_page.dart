@@ -18,11 +18,14 @@ class _GameDetailPageState extends State<GameDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.steamDark,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.steamLightDark,
-        title: Text(widget.game.name, style: const TextStyle(color: AppColors.textPrimary)),
-        iconTheme: const IconThemeData(color: AppColors.steamBlue),
+        backgroundColor: AppColors.secondary,
+        title: Text(
+          widget.game.name,
+          style: const TextStyle(color: AppColors.textPrimary),
+        ),
+        iconTheme: const IconThemeData(color: AppColors.primary),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -48,8 +51,8 @@ class _GameDetailPageState extends State<GameDetailPage> {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    border: _isPressed 
-                        ? Border.all(color: AppColors.steamLightDark, width: 4) 
+                    border: _isPressed
+                        ? Border.all(color: AppColors.secondary, width: 4)
                         : Border.all(color: Colors.transparent, width: 4),
                   ),
                   child: Stack(
@@ -59,16 +62,25 @@ class _GameDetailPageState extends State<GameDetailPage> {
                         widget.game.imageUrl,
                         width: double.infinity,
                         fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) => const Icon(Icons.error, size: 100, color: Colors.grey),
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Icon(
+                              Icons.error,
+                              size: 100,
+                              color: Colors.grey,
+                            ),
                       ),
                       if (_isHovering || _isPressed)
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.6),
+                            color: Colors.black.withValues(alpha: 0.6),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(Icons.zoom_in, color: AppColors.steamBlue, size: 30),
+                          child: const Icon(
+                            Icons.zoom_in,
+                            color: AppColors.primary,
+                            size: 30,
+                          ),
                         ),
                     ],
                   ),
@@ -82,36 +94,66 @@ class _GameDetailPageState extends State<GameDetailPage> {
                 children: [
                   Text(
                     widget.game.name,
-                    style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                    style: const TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textPrimary,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: AppColors.steamLightDark,
+                      color: AppColors.secondary,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildInfoRow('Developer:', widget.game.developer ?? 'N/A', AppColors.steamBlue, AppColors.textSecondary),
-                        _buildInfoRow('Publisher:', widget.game.publisher ?? 'N/A', AppColors.steamBlue, AppColors.textSecondary),
-                        _buildInfoRow('Release Date:', widget.game.released ?? 'N/A', AppColors.steamBlue, AppColors.textSecondary),
+                        _buildInfoRow(
+                          'Developer:',
+                          widget.game.developer ?? 'N/A',
+                          AppColors.primary,
+                          AppColors.textSecondary,
+                        ),
+                        _buildInfoRow(
+                          'Publisher:',
+                          widget.game.publisher ?? 'N/A',
+                          AppColors.primary,
+                          AppColors.textSecondary,
+                        ),
+                        _buildInfoRow(
+                          'Release Date:',
+                          widget.game.released ?? 'N/A',
+                          AppColors.primary,
+                          AppColors.textSecondary,
+                        ),
                       ],
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Text('Description', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.steamBlue)),
+                  const Text(
+                    'Description',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primary,
+                    ),
+                  ),
                   const SizedBox(height: 8),
                   Text(
                     widget.game.description,
-                    style: const TextStyle(fontSize: 16, color: AppColors.textSecondary, height: 1.5),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: AppColors.textSecondary,
+                      height: 1.5,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: AppColors.steamLightDark,
+                      color: AppColors.secondary,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(
@@ -121,16 +163,40 @@ class _GameDetailPageState extends State<GameDetailPage> {
                           children: [
                             const Icon(Icons.thumb_up, color: Colors.green),
                             const SizedBox(height: 4),
-                            Text(widget.game.reviewsPositive ?? 'N/A', style: const TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold)),
-                            const Text('Positive Reviews', style: TextStyle(color: AppColors.textSecondary, fontSize: 12)),
+                            Text(
+                              widget.game.reviewsPositive ?? 'N/A',
+                              style: const TextStyle(
+                                color: AppColors.textPrimary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Text(
+                              'Positive Reviews',
+                              style: TextStyle(
+                                color: AppColors.textSecondary,
+                                fontSize: 12,
+                              ),
+                            ),
                           ],
                         ),
                         Column(
                           children: [
                             const Icon(Icons.thumb_down, color: Colors.red),
                             const SizedBox(height: 4),
-                            Text(widget.game.reviewsNegative ?? 'N/A', style: const TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold)),
-                            const Text('Negative Reviews', style: TextStyle(color: AppColors.textSecondary, fontSize: 12)),
+                            Text(
+                              widget.game.reviewsNegative ?? 'N/A',
+                              style: const TextStyle(
+                                color: AppColors.textPrimary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Text(
+                              'Negative Reviews',
+                              style: TextStyle(
+                                color: AppColors.textSecondary,
+                                fontSize: 12,
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -146,7 +212,12 @@ class _GameDetailPageState extends State<GameDetailPage> {
     );
   }
 
-  Widget _buildInfoRow(String label, String value, Color labelColor, Color valueColor) {
+  Widget _buildInfoRow(
+    String label,
+    String value,
+    Color labelColor,
+    Color valueColor,
+  ) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),
       child: Row(
@@ -154,7 +225,10 @@ class _GameDetailPageState extends State<GameDetailPage> {
         children: [
           SizedBox(
             width: 100,
-            child: Text(label, style: TextStyle(color: labelColor, fontWeight: FontWeight.w600)),
+            child: Text(
+              label,
+              style: TextStyle(color: labelColor, fontWeight: FontWeight.w600),
+            ),
           ),
           Expanded(
             child: Text(value, style: TextStyle(color: valueColor)),

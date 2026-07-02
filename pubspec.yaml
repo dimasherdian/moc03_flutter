@@ -16,6 +16,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   http: ^1.6.0
   intl: ^0.20.2
+  shared_preferences: ^2.5.5
 
 # Development tools and packages
 dev_dependencies:
@@ -28,9 +29,8 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   # To add assets or fonts, list them here:
-  # assets:
-  #   - assets/
-
+  assets:
+    - assets/icon/icon.png
 # Launcher icon generation configurations
 flutter_launcher_icons:
   android: "launcher_icon"

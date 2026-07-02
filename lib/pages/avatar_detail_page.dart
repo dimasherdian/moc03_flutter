@@ -14,11 +14,11 @@ class AvatarDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.steamDark,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.steamLightDark,
+        backgroundColor: AppColors.secondary,
         title: Text(gameName, style: const TextStyle(color: AppColors.textPrimary)),
-        iconTheme: const IconThemeData(color: AppColors.steamBlue),
+        iconTheme: const IconThemeData(color: AppColors.primary),
       ),
       body: SafeArea(
         child: Column(
@@ -46,7 +46,7 @@ class AvatarDetailPage extends StatelessWidget {
                 height: 50,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.steamBlue,
+                    backgroundColor: AppColors.primary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
