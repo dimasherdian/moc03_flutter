@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import '../constants/app_colors.dart'; // removed because unused
+import '../constants/app_colors.dart';
 import '../services/preferences_service.dart';
 import 'onboarding_screen.dart';
 import 'login_screen.dart';
@@ -20,7 +20,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _checkNavigation() async {
-    // Jalankan loading asynchronous selama 2 detik
     await Future.delayed(const Duration(seconds: 2));
 
     final prefsService = PreferencesService();
@@ -29,13 +28,11 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!mounted) return;
 
     if (isFirstLaunch) {
-      // Pengecekan Pertama: Jika baru pertama kali dijalankan, ke Onboarding
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (_) => const OnboardingScreen()),
       );
     } else {
-      // Pengecekan Kedua: Jika tidak, periksa apakah sudah login
       final isLoggedIn = await prefsService.isLoggedIn;
 
       if (!mounted) return;
@@ -57,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -67,9 +64,9 @@ class _SplashScreenState extends State<SplashScreen> {
               height: 120,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.surface,
                 borderRadius: BorderRadius.circular(24),
-                border: Border.all(color: Colors.black, width: 4),
+                border: Border.all(color: AppColors.primary, width: 2),
               ),
               child: Image.asset('assets/icon/icon.png', fit: BoxFit.contain),
             ),
@@ -79,12 +76,12 @@ class _SplashScreenState extends State<SplashScreen> {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: AppColors.primary,
                 fontFamily: 'monospace',
               ),
             ),
             const SizedBox(height: 48),
-            const CircularProgressIndicator(color: Colors.black),
+            const CircularProgressIndicator(color: AppColors.primary),
           ],
         ),
       ),

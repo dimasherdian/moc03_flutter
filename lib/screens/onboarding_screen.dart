@@ -48,7 +48,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         curve: Curves.easeIn,
       );
     } else {
-      // Selesai onboarding
       await PreferencesService().setFirstLaunch(false);
       if (!mounted) return;
       Navigator.pushReplacement(

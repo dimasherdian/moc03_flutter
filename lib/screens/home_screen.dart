@@ -41,12 +41,9 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 48),
             ElevatedButton.icon(
               onPressed: () async {
-                // Ubah status is_logged_in menjadi false
                 await PreferencesService().setLoggedIn(false);
-
                 if (!context.mounted) return;
 
-                // Tendang user kembali ke Login Screen
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (_) => const LoginScreen()),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 import '../services/preferences_service.dart';
+import '../utils/validators.dart';
 import '../pages/steam_list_page.dart';
 import 'splash_screen.dart';
 
@@ -23,16 +24,14 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _submitLogin() async {
+    void _submitLogin() async {
     if (_formKey.currentState!.validate()) {
-      // Simpan status login dan username sesuai materi sesi 12
       final service = PreferencesService();
       await service.setLoggedIn(true);
       await service.saveUserName(_usernameController.text.trim());
 
       if (!mounted) return;
 
-      // Arahkan ke Steam List Page
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (_) => const SteamListPage()),
@@ -142,19 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderSide: const BorderSide(color: AppColors.negative, width: 2),
                       ),
                     ),
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return 'Username wajib diisi!';
-                      }
-                      if (value.trim().length < 4) {
-                        return 'Username minimal 4 karakter!';
-                      }
-                      // Hanya memperbolehkan huruf dan angka (tanpa spasi)
-                      if (!RegExp(r'^[a-zA-Z0-9]+$').hasMatch(value)) {
-                        return 'Username hanya boleh berisi huruf dan angka tanpa spasi!';
-                      }
-                      return null;
-                    },
+                    validator: Validators.validateUsername,
                   ),
                   const SizedBox(height: 16),
                   _buildFieldLabel('Password', true),
@@ -191,15 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderSide: const BorderSide(color: AppColors.negative, width: 2),
                       ),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Password wajib diisi!';
-                      }
-                      if (value.length < 6) {
-                        return 'Password minimal 6 karakter!';
-                      }
-                      return null;
-                    },
+                    validator: Validators.validatePassword,
                   ),
                   const SizedBox(height: 32),
                   SizedBox(

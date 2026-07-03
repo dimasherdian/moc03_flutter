@@ -187,13 +187,11 @@ class _SteamListPageState extends State<SteamListPage> {
             icon: const Icon(Icons.logout, color: AppColors.primary),
             tooltip: 'Logout',
             onPressed: () async {
-              // 1. Ubah status login menjadi false
               final prefs = PreferencesService();
               await prefs.setLoggedIn(false);
               
               if (!context.mounted) return;
               
-              // 2. Arahkan kembali ke Login Screen dan bersihkan riwayat navigasi
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (_) => const LoginScreen()),
